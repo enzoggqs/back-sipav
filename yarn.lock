@@ -49,17 +49,10 @@
     semver "^7.3.5"
     tar "^6.1.11"
 
-"@prisma/client@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.npmjs.org/@prisma/client/-/client-5.1.1.tgz"
-  integrity sha512-fxcCeK5pMQGcgCqCrWsi+I2rpIbk0rAhdrN+ke7f34tIrgPwA68ensrpin+9+fZvuV2OtzHmuipwduSY6HswdA==
-  dependencies:
-    "@prisma/engines-version" "5.1.1-1.6a3747c37ff169c90047725a05a6ef02e32ac97e"
-
-"@prisma/engines-version@5.1.1-1.6a3747c37ff169c90047725a05a6ef02e32ac97e":
-  version "5.1.1-1.6a3747c37ff169c90047725a05a6ef02e32ac97e"
-  resolved "https://registry.npmjs.org/@prisma/engines-version/-/engines-version-5.1.1-1.6a3747c37ff169c90047725a05a6ef02e32ac97e.tgz"
-  integrity sha512-owZqbY/wucbr65bXJ/ljrHPgQU5xXTSkmcE/JcbqE1kusuAXV/TLN3/exmz21SZ5rJ7WDkyk70J2G/n68iogbQ==
+"@prisma/client@^5.13.0":
+  version "5.13.0"
+  resolved "https://registry.npmjs.org/@prisma/client/-/client-5.13.0.tgz"
+  integrity sha512-uYdfpPncbZ/syJyiYBwGZS8Gt1PTNoErNYMuqHDa2r30rNSFtgTA/LXsSk55R7pdRTMi5pHkeP9B14K6nHmwkg==
 
 "@prisma/engines@5.1.1":
   version "5.1.1"
@@ -739,6 +732,11 @@ node-fetch@^2.6.7:
   integrity sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==
   dependencies:
     whatwg-url "^5.0.0"
+
+nodemailer@^6.9.13:
+  version "6.9.13"
+  resolved "https://registry.npmjs.org/nodemailer/-/nodemailer-6.9.13.tgz"
+  integrity sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA==
 
 nodemon@^3.0.1:
   version "3.0.1"
