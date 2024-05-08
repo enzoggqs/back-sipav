@@ -1,0 +1,29 @@
+{
+  "name": "back-sipav",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sipav-apps/back-sipav",
+  "author": "enzoggqs <eggqsaraiva@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "prisma": "npx prisma"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.13.0",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "nodemailer": "^6.9.13",
+    "prisma": "^5.1.1",
+    "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "sucrase": "^3.34.0"
+  },
+  "type": "module"
+}
