@@ -4,10 +4,8 @@ import { prisma } from "../services/prisma.js";
 
 export const create = async (req, res) => {
     try {
-        console.log('entrou')
         const { name, diseases } = req.body;
 
-        console.log(diseases)
         if(diseases.length <= 0 || diseases == undefined){
             return (res.status(400).send("Link at least one disease"))
         }
@@ -48,7 +46,6 @@ export const create = async (req, res) => {
 };
 
 export const get = async (req, res) => {
-    console.log('entrou d')
     try {
         const vaccines = await getAllVaccines();
         res.status(200).send(vaccines);

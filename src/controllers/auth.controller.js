@@ -2,14 +2,11 @@ import bcrypt from "bcrypt";
 import { authValidation } from "../validations/auth.validations.js";
 import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
-import express from "express";
 import 'dotenv/config'
 
 const secret = process.env.JWT_SECRET;
 
 const prisma = new PrismaClient();
-
-const router = express.Router();
 
 export const login = async (req, res) => {
   try {
@@ -17,8 +14,8 @@ export const login = async (req, res) => {
 
     const { email, password} = req.body;
 
-    if (!email) return res.status(400).send("Email field not filled");
-    if (!password) return res.status(400).send("Password field not filled");
+    if (!email) return res.status(400).send("E-mail não preenchido.");
+    if (!password) return res.status(400).send("Senha não preenchida.");
     
     const userExists = await prisma.user.findUnique({
       where: {
@@ -39,13 +36,13 @@ export const login = async (req, res) => {
     });
     
     if(!userExists) {
-      return(res.status(400).send("User not found"))
+      return(res.status(400).send("Usuário não encontrado."))
     }
 
     const passwordMatches = await bcrypt.compare(password, userExists.password);
     
     if (!passwordMatches) {
-      return res.status(400).send("Invalid password");
+      return res.status(400).send("Usuário e senha não batem.");
     }
 
     const token = jwt.sign(
