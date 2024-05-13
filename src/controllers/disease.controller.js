@@ -17,7 +17,7 @@ export const create = async (req, res) => {
     const disease = await createDisease(req.body);
     res.status(200).send(disease);
   } catch (e) {
-    return (res.status(400).send(e)
+    return (res.status(400).send(e))
   }
 };
 
