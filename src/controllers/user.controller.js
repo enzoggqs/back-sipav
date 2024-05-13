@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { userValidation } from "../validations/user.validations.js";
 import { createUser, deleteUser, getAllUsers, getById, updateUser } from "../repositories/user.repository.js";
 import { PrismaClient } from "@prisma/client";
+import { sendConfirmationEmail } from "../services/mail.js";
 
 const prisma = new PrismaClient();
 
@@ -34,6 +35,7 @@ export const create = async (req, res) => {
       req.body.password = hashPassword;
     }
     const user = await createUser(req.body);
+    await sendConfirmationEmail(req.body.email);
     res.status(200).send(user);
   } catch (e) {
     res.status(400).send(e);
