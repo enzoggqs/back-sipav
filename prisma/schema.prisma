@@ -15,6 +15,7 @@ model User {
   email          String?       @unique
   name           String
   cpf            String        @unique
+  type           Int           @default(0)
   password       String?
   birthdate      DateTime
   phoneNumber    String?       @unique

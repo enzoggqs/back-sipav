@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import { createDisease, getAllDiseases, deleteDisease, getById, updateDisease, getVaccineById } from "../repositories/disease.repository.js";
+import { createDisease, getAllDiseases, deleteDisease, getById, updateDisease, getVaccineById, getVaccinatedUserCountForDisease } from "../repositories/disease.repository.js";
 import { prisma } from "../services/prisma.js";
+import { getTotalUserCount } from "../repositories/user.repository.js";
 
 export const create = async (req, res) => {
   try {
@@ -65,3 +65,26 @@ export const remove = async (req, res) => {
     return (res.status(400).send("Falha ao apagar vacina."))
   }
 }
+
+export const getVaccinationPercentage = async (req, res) => {
+  try {
+    const diseaseId = Number(req.params.diseaseId);
+
+    if (isNaN(diseaseId)) {
+      return res.status(400).send("ID da doença inválido.");
+    }
+
+    const totalUsers = await getTotalUserCount();
+    const vaccinatedUsersCount = await getVaccinatedUserCountForDisease(diseaseId);
+
+    if (totalUsers === 0) {
+      return res.status(200).send({ percentage: 0 });
+    }
+
+    const percentage = (vaccinatedUsersCount / totalUsers) * 100;
+    
+    res.status(200).send({ percentage });
+  } catch (e) {
+    res.status(400).send("Falha ao calcular a porcentagem de usuários vacinados.");
+  }
+};

@@ -1,4 +1,4 @@
-import { create, get, getId, remove, update, getDiseaseAndVaccineById } from "../controllers/disease.controller.js";
+import { create, get, getId, remove, update, getDiseaseAndVaccineById, getVaccinationPercentage } from "../controllers/disease.controller.js";
 
 const diseaseRoutes = (app) => {
   app.post("/disease", create);
@@ -7,6 +7,7 @@ const diseaseRoutes = (app) => {
   app.get("/disease/:id/user=:userId", getDiseaseAndVaccineById);
   app.put("/disease/:id", update);
   app.delete("/disease/:id", remove);
+  app.get('/disease/vaccination-percentage/:diseaseId', getVaccinationPercentage);
 };
 
 export default diseaseRoutes;

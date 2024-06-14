@@ -28,8 +28,10 @@ export const createUser = async (data) => {
       phoneNumber: true,
       isResponsible: true,
       dependents: true,
+      type: true,
     }
   });
+
   return user;
 }
 
@@ -46,6 +48,7 @@ export const getAllUsers = async () => {
       phoneNumber: true,
       isResponsible: true,
       dependents: true,
+      type: true
     }
   });
   return users;
@@ -67,6 +70,7 @@ export const getById = async (id) => {
       phoneNumber: true,
       isResponsible: true,
       dependents: true,
+      type: true
     }
   });
   return user;
@@ -103,3 +107,8 @@ export const deleteUser = async (id) => {
   });
   return;
 }
+
+export const getTotalUserCount = async () => {
+  const totalUsers = await prisma.user.count();
+  return totalUsers;
+};

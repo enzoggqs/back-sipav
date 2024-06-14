@@ -32,6 +32,7 @@ export const login = async (req, res) => {
         phoneNumber: true,
         isResponsible: true,
         dependents: true,
+        type: true,
       }
     });
     

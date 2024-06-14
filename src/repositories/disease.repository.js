@@ -133,3 +133,18 @@ export const deleteDisease = async (id) => {
   });
   return;
 }
+
+export const getVaccinatedUserCountForDisease = async (diseaseId) => {
+  const vaccinatedUsers = await prisma.vaccination.findMany({
+    where: {
+      vaccine: {
+        diseases: { has: diseaseId }
+      }
+    },
+    distinct: ['userId'],
+    select: {
+      userId: true,
+    }
+  });
+  return vaccinatedUsers.length;
+};
