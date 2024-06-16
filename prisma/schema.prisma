@@ -10,12 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserType {
+  REGULAR
+  ADMIN
+}
+
 model User {
   id             Int           @id @default(autoincrement())
   email          String?       @unique
   name           String
   cpf            String        @unique
-  type           Int           @default(0)
+  type           UserType      @default(REGULAR)
   password       String?
   birthdate      DateTime
   phoneNumber    String?       @unique
@@ -52,4 +57,5 @@ model Vaccination {
   vaccine   Vaccine  @relation(fields: [vaccineId], references: [id], onDelete: Cascade)
   vaccineId Int
   date      DateTime
+  endDate   DateTime? 
 }
