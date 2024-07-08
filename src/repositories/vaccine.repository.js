@@ -14,7 +14,7 @@ const nulifyObjectStrings = (values) =>{
 }
 
 export const createVaccine = async (data) => {
-  data = nulifyObjectStrings(data);
+  console.log(data)
   const vaccine = await prisma.vaccine.create({
     data,
     select: {
