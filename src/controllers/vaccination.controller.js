@@ -1,9 +1,38 @@
 import bcrypt from "bcrypt";
 import { createVaccination, deleteVaccination, getById, getAllVaccinations, updateVaccination } from "../repositories/vaccination.repository.js";
+import { prisma } from "../services/prisma.js";
 
 export const create = async (req, res) => {
     try {
-        const vaccination = await createVaccination(req.body);
+        const { userId, vaccineId, date } = req.body;
+
+        // Obter os dados da vacina
+        const vaccine = await prisma.vaccine.findUnique({
+            where: { id: vaccineId },
+            select: {
+                doses_required: true,
+                months_between_doses: true,
+            },
+        });
+
+        if (!vaccine) {
+            return res.status(400).send("Vacina não encontrada.");
+        }
+
+        // Calcular o endDate
+        let endDate = null;
+        if (vaccine.doses_required > 1) {
+            const monthsBetweenDoses = parseInt(vaccine.months_between_doses, 10);
+            if (!isNaN(monthsBetweenDoses)) {
+                const dateObj = new Date(date);
+                endDate = new Date(dateObj.setMonth(dateObj.getMonth() + monthsBetweenDoses * (vaccine.doses_required - 1)));
+            }
+        }
+
+        console.log(endDate)
+
+        const vaccination = await createVaccination({ ...req.body, endDate });
+        console.log(vaccination)
         res.status(200).send(vaccination);
     } catch (e) {
         res.status(400).send("Falha ao criar vacinação.");

@@ -21,7 +21,8 @@ export const createVaccination = async (data) => {
             id: true,
             userId: true,
             vaccineId: true,
-            date: true
+            date: true,
+            endDate: true
         }
     });
 
@@ -34,7 +35,8 @@ export const getAllVaccinations = async () => {
             id: true,
             userId: true,
             vaccineId: true,
-            date: true
+            date: true,
+            endDate: true
         }
     });
     return vaccinations;
@@ -57,7 +59,6 @@ export const getById = async (userId, vaccineId) => {
 }
 
 export const updateVaccination = async (id, data) => {
-    data = nulifyObjectStrings(data);
     const vaccination = await prisma.vaccination.update({
         where: {
             id
