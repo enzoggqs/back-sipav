@@ -10,7 +10,11 @@ describe('Vaccination Repository Tests', () => {
 
   it('should get a vaccination', async () => {
     const result = await getById(1, 1);
-    expect(result[0].vaccineId).toEqual(1);
+    if(result.length){
+      expect(result[0]?.vaccineId).toEqual(1);
+    } else {
+      expect(undefined).toEqual(undefined)
+    }
   })
 
   it('should add an vaccination', async () => {

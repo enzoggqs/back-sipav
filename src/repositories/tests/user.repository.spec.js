@@ -5,12 +5,12 @@ describe('User Repository Tests', () => {
 
     it('Should get users', async () => {
         const result = await getAllUsers();
-        expect(result[0].name).toEqual("alalaal");
+        expect(result[0].name).toEqual("Teste");
     });
 
     it('should get a user', async () => {
         const result = await getById(1);
-        expect(result.name).toEqual("testeee");
+        expect(result.name).toEqual("Teste");
     })
 
     it('should add an user', async () => {

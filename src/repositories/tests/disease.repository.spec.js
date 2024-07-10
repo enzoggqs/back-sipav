@@ -4,17 +4,17 @@ describe('Disease Repository Tests', () => {
 
   it('Should get diseases', async () => {
     const result = await getAllDiseases();
-    expect(result[0].name).toEqual("Gripe");
+    expect(result[0].name).toEqual("Caxumba");
   });
 
   it('should get a disease', async () => {
     const result = await getById(1);
-    expect(result.name).toEqual("Gripe");
+    expect(result.name).toEqual("Caxumba");
   })
 
   it('should get a vaccine', async () => {
     const result = await getVaccineById(1, 1);
-    expect(result.disease.name).toEqual("Gripe");
+    expect(result.disease.name).toEqual("Caxumba");
   })
 
   it('should add an disease', async () => {

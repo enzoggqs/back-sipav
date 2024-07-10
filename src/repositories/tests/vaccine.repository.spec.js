@@ -4,12 +4,12 @@ describe('Vaccine Repository Tests', () => {
 
   it('Should get vaccines', async () => {
     const result = await getAllVaccines();
-    expect(result[0].name).toEqual("Vacina da Gripe");
+    expect(result[0].name).toEqual("Vacina contra a Dengue");
   });
 
   it('should get a vacine', async () => {
     const result = await getById(2);
-    expect(result.name).toEqual("Vacina da Gripe 2");
+    expect(result.name).toEqual("Vacina da Gripe");
   })
 
   it('should add an vaccine', async () => {
