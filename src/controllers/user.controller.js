@@ -62,43 +62,54 @@ export const getId = async (req, res) => {
 
 export const update = async (req, res) => {
   try {
-    console.log(req.body)
-    if(req.body.cpf){
+    console.log(req.body);
+    const userId = Number(req.params.id);
+
+    // Verificação do CPF
+    if (req.body.cpf) {
       const cpfExists = await prisma.user.findUnique({
         where: { cpf: req.body.cpf },
       });
-  
-      if (cpfExists) {
-        return (res.status(400).send("CPF já cadastrado."))
+
+      // Verifica se o CPF já está cadastrado por outro usuário (ID diferente)
+      if (cpfExists && cpfExists.id !== userId) {
+        return res.status(400).send("CPF já cadastrado.");
       }
     }
 
-    if(req.body.telegram){
+    // Verificação do Telegram
+    if (req.body.telegram) {
       const telegramExists = await prisma.user.findUnique({
         where: { telegram: req.body.telegram },
       });
-  
-      if (telegramExists) {
-        return (res.status(400).send("Telegram já cadastrado."))
+
+      // Verifica se o Telegram já está cadastrado por outro usuário (ID diferente)
+      if (telegramExists && telegramExists.id !== userId) {
+        return res.status(400).send("Telegram já cadastrado.");
       }
     }
 
-    if(req.body.phoneNumber){
+    // Verificação do Telefone
+    if (req.body.phoneNumber) {
       const phoneNumberExists = await prisma.user.findUnique({
         where: { phoneNumber: req.body.phoneNumber },
       });
-  
-      if (phoneNumberExists) {
-        return (res.status(400).send("Telefone já cadastrado."))
+
+      // Verifica se o Telefone já está cadastrado por outro usuário (ID diferente)
+      if (phoneNumberExists && phoneNumberExists.id !== userId) {
+        return res.status(400).send("Telefone já cadastrado.");
       }
     }
-    const user = await updateUser(Number(req.params.id), req.body);
-    
+
+    // Atualiza o usuário
+    const user = await updateUser(userId, req.body);
+
     res.status(200).send(user);
   } catch (e) {
     res.status(400).send(e);
   }
-}
+};
+
 
 export const remove = async (req, res) => {
   try {
