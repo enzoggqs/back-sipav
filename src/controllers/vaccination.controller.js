@@ -79,13 +79,72 @@ export const remove = async (req, res) => {
 export const getVaccinationDistributionByAgeGroup = async (req, res) => {
     try {
         const { diseaseId } = req.query;
-        
+
         const parsedDiseaseId = diseaseId ? Number(diseaseId) : null;  // Garantir que o diseaseId seja convertido corretamente
         const ageGroupDistribution = await getUsersVaccinationByAgeGroup(parsedDiseaseId);
-        
+
         res.status(200).json(ageGroupDistribution);
     } catch (error) {
         console.error("Erro ao buscar distribuição de vacinações por faixa etária:", error);
+        res.status(500).send("Erro ao buscar os dados.");
+    }
+};
+
+export const getMonthlyVaccinationDistribution = async (req, res) => {
+    try {
+        const vaccinations = await getAllVaccinations(); // Busca todas as vacinações
+        const selectedYear = req.query.year ? parseInt(req.query.year, 10) : null;
+
+        // Função para gerar todos os meses no formato MM, com contagem 0
+        const generateEmptyMonths = () => {
+            const months = [];
+            for (let month = 1; month <= 12; month++) {
+                const monthString = month.toString().padStart(2, '0'); // Formato MM (ex: 01, 02, ..., 12)
+                months.push({ month: monthString, count: 0 });
+            }
+            return months;
+        };
+
+        let monthlyDistribution = {};
+
+        // Agrupa as vacinações por mês e ano, ou apenas por mês se nenhum ano for selecionado
+        vaccinations.forEach(vaccination => {
+            const date = new Date(vaccination.date);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Formato MM
+
+            // Se houver um ano selecionado, filtra pelo ano; caso contrário, agrupa por mês independentemente do ano
+            if (!selectedYear || year === selectedYear) {
+                if (!monthlyDistribution[month]) {
+                    monthlyDistribution[month] = 0;
+                }
+                monthlyDistribution[month]++;
+            }
+        });
+
+        let monthlyData = [];
+
+        if (selectedYear) {
+            // Se um ano foi selecionado, retorna os meses desse ano com contagem
+            monthlyData = generateEmptyMonths();
+            monthlyData.forEach(item => {
+                if (monthlyDistribution[item.month]) {
+                    item.count = monthlyDistribution[item.month]; // Atualiza a contagem se houver dados
+                }
+            });
+        } else {
+            // Se nenhum ano foi selecionado, retorna o somatório para cada mês independente do ano
+            monthlyData = generateEmptyMonths();
+            monthlyData.forEach(item => {
+                if (monthlyDistribution[item.month]) {
+                    item.count = monthlyDistribution[item.month]; // Atualiza a contagem
+                }
+            });
+        }
+
+        res.status(200).json(monthlyData);
+    } catch (error) {
+        console.error("Erro ao buscar distribuição mensal de vacinações:", error);
         res.status(500).send("Erro ao buscar os dados.");
     }
 };
