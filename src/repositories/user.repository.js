@@ -6,12 +6,12 @@ const calculateAge = (birthdate) => {
   return age;
 };
 
-const nulifyObjectStrings = (values) =>{
+const nulifyObjectStrings = (values) => {
   for (let [key, value] of Object.entries(values)) {
-    if (value instanceof String ){
+    if (value instanceof String) {
       value = value.trim();
     }
-    if (!value){
+    if (!value) {
       values[key] = undefined;
     }
   }
@@ -118,11 +118,21 @@ export const getTotalUserCount = async () => {
   return totalUsers;
 };
 
-export const getUsersVaccinationByAgeGroup = async () => {
+export const getUsersVaccinationByAgeGroup = async (diseaseId = null) => {
   const usersWithVaccinations = await prisma.user.findMany({
+    where: {
+      type: 'REGULAR',
+      vaccines: {
+        some: {
+          vaccine: {
+            diseases: diseaseId ? { has: diseaseId } : undefined,
+          },
+        },
+      },
+    },
     include: {
-      vaccines: true
-    }
+      vaccines: true,
+    },
   });
 
   const ageGroups = {

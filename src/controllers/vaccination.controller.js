@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { createVaccination, deleteVaccination, getById, getAllVaccinations, updateVaccination } from "../repositories/vaccination.repository.js";
 import { prisma } from "../services/prisma.js";
+import { getUsersVaccinationByAgeGroup } from "../repositories/user.repository.js";
 
 export const create = async (req, res) => {
     try {
@@ -74,3 +75,17 @@ export const remove = async (req, res) => {
         res.status(400).send("Falha ao apagar vacinação.");
     }
 }
+
+export const getVaccinationDistributionByAgeGroup = async (req, res) => {
+    try {
+        const { diseaseId } = req.query;
+        
+        const parsedDiseaseId = diseaseId ? Number(diseaseId) : null;  // Garantir que o diseaseId seja convertido corretamente
+        const ageGroupDistribution = await getUsersVaccinationByAgeGroup(parsedDiseaseId);
+        
+        res.status(200).json(ageGroupDistribution);
+    } catch (error) {
+        console.error("Erro ao buscar distribuição de vacinações por faixa etária:", error);
+        res.status(500).send("Erro ao buscar os dados.");
+    }
+};
