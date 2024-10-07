@@ -26,7 +26,10 @@ export const create = async (req, res) => {
             const monthsBetweenDoses = parseInt(vaccine.months_between_doses, 10);
             if (!isNaN(monthsBetweenDoses)) {
                 const dateObj = new Date(date);
-                endDate = new Date(dateObj.setMonth(dateObj.getMonth() + monthsBetweenDoses * (vaccine.doses_required - 1)));
+                endDate = new Date(dateObj.setMonth(dateObj.getMonth() + monthsBetweenDoses 
+                //* (vaccine.doses_required - 1)
+                )
+            );
             }
         }
 
